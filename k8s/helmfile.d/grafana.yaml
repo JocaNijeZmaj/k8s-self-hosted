@@ -1,0 +1,30 @@
+repositories:
+  - name: grafana
+    url: https://grafana.github.io/helm-charts
+
+releases:
+  - name: grafana
+    namespace: monitoring
+    chart: grafana/grafana
+    version: 7.3.6
+    values:
+      - persistence:
+          enabled: true
+          type: pvc
+          storageClassName: "local-storage"
+          accessModes:
+            - ReadWriteOnce
+          size: 2Gi
+        service:
+          type: NodePort
+        datasources:
+          datasources.yaml:
+            apiVersion: 1
+            datasources:
+            - name: prometheus
+              type: prometheus
+              url: http://192.168.1.49:32348/
+              access: proxy
+              isDefault: true
+        adminPassword: "adminpassword" # This is a test local cluster :)
+

@@ -5,14 +5,24 @@ repositories:
 releases:
   - name: prometheus
     namespace: monitoring
-    createNamespace: true
     chart: prometheus/prometheus
     version: 25.17.0
     values:
       - alertmanager:
-          enabled: true
+          enabled: false
         pushgateway:
           enabled: true
         server:
+          securityContext:
+            runAsUser: 0
+            runAsNonRoot: false
+            runAsGroup: 0
+            fsGroup: 0
           service:
             type: NodePort
+          persistentVolume:
+            enabled: false
+            # storageClassName: "local-storage"
+            # resources:
+            #   requests:
+            #     size: 2Gi
