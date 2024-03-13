@@ -1,0 +1,7 @@
+.DS_Store
+.idea
+plan.out
+plan
+kubeconfig*
+**/*.pem
+.vscode
